@@ -1,6 +1,6 @@
 const { Thought, User } = require('../models');
 
-module.exprts = {
+module.exports = {
     
     // Get all thoughts
     async getThoughts(req, res) {
