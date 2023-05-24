@@ -1,24 +1,24 @@
-const dayjs = require('dayjs');
-const mongoose = require('mongoose');
+//const dayjs = require('dayjs');
+const { Schema, model } = require('mongoose');
 const reactionSchema = require('./Reaction')
 
-const currentDate = dayjs().format('DD/MM/YYYY');
+//const currentDate = dayjs().format('DD/MM/YYYY');
 
 const thoughtSchema = new Schema(
     {
         thoughtText: {
             type: String,
-            require: true,
+            required: true,
             minlength: 1,
-            maxlength: 280
+            maxlength: 280,
         },
         createdAt: {
             type: Date,
-            default: Date.now
+            default: Date.now,
         },
         username: {
             type: String,
-            required: true
+            required: true,
         },
         reactions: [reactionSchema]
     },
@@ -27,7 +27,7 @@ const thoughtSchema = new Schema(
             getters: true,
         }
     }
-)
+);
 
-module.exports = mongoose.model('Thought', thoughtSchema)
+module.exports = model('Thought', thoughtSchema)
 
