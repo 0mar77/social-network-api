@@ -1,5 +1,6 @@
 const dayjs = require('dayjs');
 const mongoose = require('mongoose');
+const reactionSchema = require('./Reaction')
 
 const currentDate = dayjs().format('DD/MM/YYYY');
 
@@ -13,15 +14,18 @@ const thoughtSchema = new Schema(
         },
         createdAt: {
             type: Date,
-            default: currentDate
+            default: Date.now
         },
         username: {
             type: String,
             required: true
         },
-        // reactions: {
-
-        // }
+        reactions: [reactionSchema]
+    },
+    {
+        toJSON: {
+            getters: true,
+        }
     }
 )
 

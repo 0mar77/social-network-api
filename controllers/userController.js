@@ -31,13 +31,28 @@ module.exports = {
         }
     },
 
+    // Update a user
+    async updateUser(req, res) {
+        try {
+            const user = await User.findOneAndUpdate(
+                { __id: req.params.userId },
+                { $set: req.body },
+                { runValidators: true, new: true }
+            );
+            res.status(200).json(user);
+        } catch(err) {
+            res.status(500).json(err);
+        }
+    },
+
     // Delete a User
     async deleteUser(req, res) {
         try {
             const user = await User.findOneAndDelete({ __id: req.params.userId });
-            res.status(200).json(user)
+            res.status(200).json(user);
         } catch(err) {
             res.status(500).json(err);
         }
-    }
+    },
+
 }
