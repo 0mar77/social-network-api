@@ -15,7 +15,7 @@ module.exports = {
     // Get a thought by id
     async getOneThought(req, res) {
         try{
-            const thought = await Thought.findOne({ __id: req.params.thoughtId })
+            const thought = await Thought.findOne({ _id:req.params.thoughtId }).select('-__v');;
             res.status(200).json(thought);
         } catch(err) {
             res.status(500).json(err)
@@ -27,11 +27,11 @@ module.exports = {
         try{
             const thought = await Thought.create(req.body);
             const user = await User.findOneAndUpdate(
-                { __id: req.params.thoughtId },
+                { _id: req.params.thoughtId },
                 { $addToset: req.body },
                 { new: true }
             );
-            res.status(200).json('New thought created!!');
+            res.status(200).json(thought);
         } catch(err) {
             res.status(500).json(err)
         }
@@ -41,7 +41,7 @@ module.exports = {
     async updateThought(req, res) {
         try{
             const thought = await Thought.findOneAndUpdate(
-                { __id: req.params.thoughtId },
+                { _id: req.params.thoughtId },
                 { $set: req.body },
                 { runValidators: true, new: true }
             )
@@ -54,7 +54,7 @@ module.exports = {
     // Delete a thought
     async deleteThought(req, res) {
         try{
-            const thought = await Thought.findOneAndDelete({ __id: req.params.thoughtId })
+            const thought = await Thought.findOneAndDelete({ _id: req.params.thoughtId })
             res.status(200).json(thought);
         } catch(err) {
             res.status(500).json(err)
